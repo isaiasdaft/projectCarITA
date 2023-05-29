@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,6 +16,7 @@ import Language from './src/screens/Language';
 import Forgot from './src/screens/ForgotPassword';
 import { NativeBaseProvider } from 'native-base';
 import MyDrawer from './src/screens/Drawer';
+import SplashScreen from './src/screens/SplashScreen';
 import AppStack from './src/navigation/AppStack';
 import VerifiedAcc from './src/screens/VerifiedAccount';
 
@@ -24,6 +24,26 @@ import VerifiedAcc from './src/screens/VerifiedAccount';
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    // Simular una operación de carga
+    // Aquí puedes realizar cualquier tarea de inicialización de tu aplicación
+
+    // Redirigir a la siguiente pantalla después de 3 segundos
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+
+    // Limpiar el temporizador al desmontar el componente
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) { 
+
+    return <NativeBaseProvider><SplashScreen /></NativeBaseProvider>
+    ;
+  }
   
   return (
     <NativeBaseProvider>
@@ -33,10 +53,11 @@ export default function App() {
                 headerStyle: {
                 backgroundColor: '#6B0000', 
               },
-              
               headerTitleStyle: {
                 color: 'white'
-              }
+              },
+              title:"Inicar sesión",
+
             }}/>
              <Stack.Screen name="Register" component={Regis} options={{
                 headerStyle: {
@@ -44,7 +65,8 @@ export default function App() {
               },
               headerTitleStyle: {
                 color: 'white'
-              }
+              }, 
+              title: "Registrarse"
             }}/>
             
           <Stack.Screen name="Home" component={MyDrawer} options={{
@@ -58,7 +80,7 @@ export default function App() {
                  headerShown: false,
             }}/>
             
-            <Stack.Screen name="Verified" component={VerifiedAcc} options={{
+            <Stack.Screen name="verified" component={VerifiedAcc} options={{
                 headerStyle: {
                 backgroundColor: '#6B0000', 
               },
@@ -72,23 +94,27 @@ export default function App() {
               },
               headerTitleStyle: {
                 color: 'white'
-              }
+              }, 
+              title: "Confirmar Cuenta"
             }}/>
           <Stack.Screen name="forget" component={Forgot} options={{
+                headerStyle: {
+                backgroundColor: '#6B0000', 
+                
+              },
+              headerTitleStyle: {
+                color: 'white',
+              }, 
+              title: "Recuperar contraseña"
+            }}/>
+            <Stack.Screen name="Settings" component={Settings} options={{
                 headerStyle: {
                 backgroundColor: '#6B0000', 
               },
               headerTitleStyle: {
                 color: 'white'
-              }
-            }}/>
-            <Stack.Screen name="Settings" component={Settings} options={{
-                headerStyle: {
-                backgroundColor: '#6B0000',
-              },
-              headerTitleStyle: {
-                color: 'white'
-              }
+              }, 
+              title: "Settings"
             }}/>
             <Stack.Screen name="Language" component={Language} options={{
                 headerStyle: {
@@ -96,7 +122,8 @@ export default function App() {
               },
               headerTitleStyle: {
                 color: 'white'
-              }
+              }, 
+              title: "Lenguaje"
             }}/>
 
             <Stack.Screen name="Appoinment" component={Appoinment} options={{
@@ -106,9 +133,7 @@ export default function App() {
               headerTitleStyle: {
                 color: 'white'
               },
-              headerTitleStyle: {
-                color: 'white'
-              }
+              
             }}/> 
             <Stack.Screen name="InformationCustomer" component={InfoQuote} options={{
                 headerStyle: {
@@ -116,7 +141,8 @@ export default function App() {
               },
               headerTitleStyle: {
                 color: 'white'
-              }
+              }, 
+              title: "Información de la cita"
             }}/> 
              <Stack.Screen name="DetailsAppoinment" component={DetailsAppoinment} options={{
                 headerStyle: {
@@ -124,7 +150,8 @@ export default function App() {
               },
               headerTitleStyle: {
                 color: 'white'
-              }
+              }, 
+              title: "Detalles del trabajo"
             }}/> 
 
             <Stack.Screen name="Contact" component={Contact} options={{
@@ -133,12 +160,12 @@ export default function App() {
               },
               headerTitleStyle: {
                 color: 'white'
-              },
+              }
             }}/>    
                <Stack.Screen name="CreateContact" component={CreateContact} options={{
                 headerStyle: {
                 backgroundColor: '#6B0000', 
-              },
+              }, title: 'Crear nuevo contacto',
               headerTitleStyle: {
                 color: 'white'
               }
@@ -147,7 +174,7 @@ export default function App() {
                 headerStyle: {
                 backgroundColor: '#6B0000', 
                 
-              },
+              },title: 'Detalles de contacto',
               headerTitleStyle: {
                 color: 'white'
               }
@@ -158,7 +185,6 @@ export default function App() {
       </NativeBaseProvider>
       );
 }
-
 
 
 
